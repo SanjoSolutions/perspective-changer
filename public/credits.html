@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Credits</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="credits.css" />
+    <style>
+      h1 {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Credits</h1>
+
+    <template id="credit">
+      <div class="credit">
+        <div class="credit__header">
+          <div class="credit__head-line">
+            <span class="credit__name"></span
+            ><span class="credit__by"> by </span
+            ><span class="credit__author"></span>
+          </div>
+          <div class="credit__links">
+            <a class="credit__toggle-show-license" href="#">Show license</a
+            ><a class="credit__toggle-show-info" href="#">Show info</a
+            ><a class="credit__url" href="#" target="_blank">Website</a>
+          </div>
+        </div>
+        <div class="credit__license"></div>
+        <div class="credit__info"></div>
+      </div>
+    </template>
+
+    <script src="marked.min.js"></script>
+    <script>
+      const credits = [
+        {
+          name: "Answer for \"How to fit object to camera in threejs using OrthographicCamera?\"",
+          author: "nidalpres",
+          url: "https://stackoverflow.com/a/42867660/759971",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/"
+        },
+        {
+          name: "three.js",
+          author: "three.js authors",
+          url: "https://threejs.org/",
+          license: `The MIT License
+
+Copyright © 2010-2023 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.`,
+        }
+      ];
+
+      const creditTemplate = document.getElementById("credit");
+
+      for (const credit of credits) {
+        const $credit = creditTemplate.content.cloneNode(true);
+        $credit.querySelector(".credit__name").textContent = credit.name;
+        if (credit.author) {
+          $credit.querySelector(".credit__author").textContent = credit.author;
+        } else {
+          $credit.querySelector(".credit__by").remove();
+          $credit.querySelector(".credit__author").remove();
+        }
+        $credit.querySelector(".credit__url").href = credit.url;
+        if (credit.license) {
+          $credit.querySelector(".credit__license").innerHTML = marked.parse(
+            credit.license,
+          );
+        } else {
+          const $showLicense = $credit.querySelector(
+            ".credit__toggle-show-license",
+          );
+          if (credit.licenseUrl) {
+            $showLicense.href = credit.licenseUrl;
+            $showLicense.target = "_blank";
+            $showLicense.textContent = "Open license";
+          }
+          $credit.querySelector(".credit__license").remove();
+        }
+        if (credit.info) {
+          $credit.querySelector(".credit__info").innerHTML = marked.parse(
+            credit.info,
+          );
+        } else {
+          $credit.querySelector(".credit__toggle-show-info").remove();
+          $credit.querySelector(".credit__info").remove();
+        }
+        document.body.appendChild($credit);
+      }
+
+      document.addEventListener("click", function (event) {
+        if (
+          event.target.matches(".credit__toggle-show-license") &&
+          event.target.getAttribute("href") === "#"
+        ) {
+          event.preventDefault();
+          event.target.textContent =
+            event.target.textContent === "Show license"
+              ? "Hide license"
+              : "Show license";
+          event.target
+            .closest(".credit")
+            .classList.toggle("credit--show-license");
+        } else if (event.target.matches(".credit__toggle-show-info")) {
+          event.preventDefault();
+          event.target.textContent =
+            event.target.textContent === "Show info"
+              ? "Hide info"
+              : "Show info";
+          event.target.closest(".credit").classList.toggle("credit--show-info");
+        }
+      });
+    </script>
+  </body>
+</html>

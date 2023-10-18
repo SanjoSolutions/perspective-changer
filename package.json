@@ -1,0 +1,14 @@
+{
+  "license": "See LICENSE.",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --outdir=public --format=esm",
+    "build:watch": "esbuild src/index.js --bundle --outdir=public --format=esm",
+    "build:serve": "esbuild src/index.js --bundle --outdir=public --format=esm --serve --servedir=public"
+  },
+  "dependencies": {
+    "three": "^0.157.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.5"
+  }
+}

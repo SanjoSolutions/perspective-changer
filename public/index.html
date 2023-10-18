@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>3D Object Perspective Changer</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      form {
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+      }
+      input[type='file'] {
+        display: block;
+      }
+      #setAxis {
+        margin-bottom: 1rem;
+      }
+      canvas {
+        display: block;
+        border: 1px solid #333;
+      }
+      .transformed-images {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .transformed-images canvas {
+        margin-right: 1rem;
+      }
+      .transformed-images canvas:last-child {
+        margin-right: 0;
+      }
+      button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: blue;
+        color: #fff;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: hsl(240 100% 68% / 1);
+      }
+      .sections {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      .sections > * {
+        margin-right: 1rem;
+      }
+      .section > *:last-child {
+        margin-right: 0;
+      }
+      footer {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        padding: 0.5rem;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>3D Object Perspective Changer</h1>
+    <h2>To orthographic perspective with 60 degree angle</h2>
+    <form>
+      <label for="image-input">Upload an image:</label>
+      <input type="file" id="image-input" accept="image/*" />
+    </form>
+    <div id="setAxis" style="display: none">
+      <button type="button" id="setOrigin">Set origin</button>
+      <button type="button" id="setXAxis">Set X-axis</button>
+      <button type="button" id="setYAxis">Set Y-axis</button>
+      <button type="button" id="setZAxis">Set Z-axis</button>
+    </div>
+    <div class="sections">
+      <canvas id="image" style="display: none; margin-bottom: 1rem;"></canvas>
+      <div class="transformed-images">
+        <canvas id="transformedImage" style="display: none"></canvas>
+        <canvas id="transformedImage2" style="display: none"></canvas>
+        <canvas id="transformedImage3" style="display: none"></canvas>
+      </div>
+      <div class="preview-and-save" style="display: none;">
+        <canvas id="threeD" style="margin-bottom: 1rem;"></canvas>
+        <button id="save-button">Save Image</button>
+      </div>
+    </div>
+    <footer>
+      <a href="credits.html">Credits</a>
+    </footer>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
